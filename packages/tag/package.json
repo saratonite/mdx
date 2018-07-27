@@ -1,7 +1,7 @@
 {
   "name": "@mdx-js/tag",
   "license": "MIT",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "repository": "mdx-js/mdx",
   "description": "A fully-featured Markdown/MDX React component for ambitious projects",
   "main": "dist/index.js",
@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "create-react-context": "^0.2.2",
+    "hoist-non-react-statics": "^2.5.5",
     "prop-types": "^15.6.1"
   },
   "devDependencies": {

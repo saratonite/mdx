@@ -1,11 +1,13 @@
 {
   "name": "@mdx-js/mdx",
-  "version": "0.14.0",
+  "version": "0.15.0-0",
   "license": "MIT",
   "repository": "mdx-js/mdx",
   "description": "Parse MDX and transpile to JSX",
   "files": [
     "index.js",
+    "util.js",
+    "md-ast-to-mdx-ast.js",
     "mdx-ast-to-mdx-hast.js",
     "mdx-hast-to-jsx.js"
   ],
@@ -20,7 +22,6 @@
     "mdx"
   ],
   "dependencies": {
-    "@mdx-js/mdxast": "^0.10.0",
     "mdast-util-to-hast": "^3.0.0",
     "remark-parse": "^5.0.0",
     "remark-squeeze-paragraphs": "^3.0.1",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.44",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.44",
     "@babel/plugin-syntax-jsx": "^7.0.0-beta.44",
     "hast-util-select": "^1.0.1",
     "jest": "^22.4.3",
