@@ -1,4 +1,4 @@
-function toJSX(node, parentNode = {}) {
+function toJSX(node, parentNode = {}, options = {}) {
   let children = ''
 
   if (node.type === 'root') {
@@ -13,7 +13,7 @@ function toJSX(node, parentNode = {}) {
       }
 
       if (childNode.type === 'export') {
-        if(childNode.default) {
+        if (childNode.default) {
           layout = childNode.value.replace(/^export default /, '')
           continue
         }
@@ -36,7 +36,10 @@ function toJSX(node, parentNode = {}) {
       '\n' +
       exportNodes.map(childNode => toJSX(childNode, node)).join('\n') +
       '\n' +
-      `export default ({components, ...props}) => <MDXTag name="wrapper" ${layout ? `Layout={${layout}} layoutProps={props}` : ''} components={components}>${jsxNodes
+      (options.skipExport ? '' : 'export default ({components, ...props}) => ') +
+      `<MDXTag name="wrapper" ${
+        layout ? `Layout={${layout}} layoutProps={props}` : ''
+      } components={components}>${jsxNodes
         .map(childNode => toJSX(childNode, node))
         .join('')}</MDXTag>`
     )
@@ -51,7 +54,7 @@ function toJSX(node, parentNode = {}) {
     let props = ''
 
     if (Array.isArray(node.properties.className)) {
-      node.properties.className = node.properties.className.join(' ');
+      node.properties.className = node.properties.className.join(' ')
     }
 
     if (Object.keys(node.properties).length > 0) {
@@ -64,22 +67,20 @@ function toJSX(node, parentNode = {}) {
   }
 
   // Wraps all text nodes except new lines inside template string, so that we don't run into escaping issues.
-  if(node.type === 'text') {
-    return node.value === '\n' ? node.value : '{`' + node.value.replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`}'
+  if (node.type === 'text') {
+    return node.value === '\n'
+      ? node.value
+      : '{`' + node.value.replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`}'
   }
 
-  if (
-    node.type === 'import' ||
-    node.type === 'export' ||
-    node.type === 'jsx'
-  ) {
+  if (node.type === 'import' || node.type === 'export' || node.type === 'jsx') {
     return node.value
   }
 }
 
-function compile() {
+function compile(options = {}) {
   this.Compiler = tree => {
-    return toJSX(tree)
+    return toJSX(tree, {}, options)
   }
 }
 

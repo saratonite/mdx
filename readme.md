@@ -284,14 +284,18 @@ Name | Type | Required | Description
 ---- | ---- | -------- | -----------
 `mdPlugins` | Array[] | `false` | Array of remark plugins to manipulate the MDXAST
 `hastPlugins` | Array[] | `false` | Array of rehype plugins to manipulate the MDXHAST
+`skipExport` | Boolean | `false` | Skip `export default` wrapper on transpiled JSX
 
 #### Specifying plugins
 
 Plugins need to be passed to the MDX loader via webpack options.
 
+If a plugin needs specific options, use the `[plugin, pluginOptions]` syntax.
+
 ```js
 const images = require('remark-images')
 const emoji = require('remark-emoji')
+const toc = require('remark-toc')
 
 module.exports = {
   module: {
@@ -305,7 +309,7 @@ module.exports = {
           {
             loader: '@mdx-js/loader',
             options: {
-              mdPlugins: [images, emoji]
+              mdPlugins: [images, emoji, [toc, {heading: 'intro'}]]
             }
           }
         ]

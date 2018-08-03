@@ -1,16 +1,16 @@
 import React from 'react'
-import { render } from 'react-dom'
 import { MDXProvider } from '@mdx-js/tag'
-import { Provider as RebassProvider } from 'rebass'
+import { Container, Provider as RebassProvider } from 'rebass'
 import createComponents from '@rebass/markdown'
 
-import Content from './content.mdx'
+import Doc from './example.md'
 
-render(
+export default () => (
   <MDXProvider components={createComponents()}>
     <RebassProvider>
-      <Content />
+      <Container>
+        <Doc />
+      </Container>
     </RebassProvider>
-  </MDXProvider>,
-  document.querySelector('#demo')
+  </MDXProvider>
 )
